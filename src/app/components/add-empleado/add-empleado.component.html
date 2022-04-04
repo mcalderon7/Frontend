@@ -1,0 +1,34 @@
+<div>
+    <div class="d-flex aligns-items-center justify-content-center">
+        <h4 class="h4-header">Formulario de registro - Nuevo empleado</h4>
+    </div>
+    <div class="register-form">
+        <form ngNativeValidate (ngSubmit)="saveTutorial()">
+            <div *ngIf="!submitted">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" required [(ngModel)]="empleado.nombre" name="nombre" />
+                </div>
+                <div class="form-group">
+                    <label for="puesto">Puesto</label>
+                    <input type="text" class="form-control" id="puesto" required [(ngModel)]="empleado.puesto" name="puesto" />
+                </div>
+                <div class="form-group">
+                    <label for="fecha_primera_dosis">Fecha primera dosis</label>
+                    <input type="date" class="form-control" id="fecha_primera_dosis" [(ngModel)]="empleado.fecha_primera_dosis" name="fecha_primera_dosis" />
+                </div>
+                <div class="form-group">
+                    <label for="ref_vacuna">Vacuna suministrada</label>
+                    <select class="form-select" id="ref_vacuna" [(ngModel)]="id_vacuna" [ngModelOptions]="{standalone: true}" id="ref_vacuna">
+                        <option *ngFor="let vac of dataVacunas" [value]="vac.id_vacuna">{{vac.nombre}}</option>
+                      </select>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-success">Registrar</button>
+            </div>
+            <div *ngIf="submitted" class="d-flex aligns-items-center justify-content-center">
+                <h4>Empleado registrado correctamente!</h4>
+            </div>
+        </form>
+    </div>
+</div>

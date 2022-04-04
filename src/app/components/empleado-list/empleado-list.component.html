@@ -1,0 +1,80 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Puesto</th>
+            <th>Vacuna suministrada</th>
+            <th>Fecha primera dosis</th>
+            <th>Estado primera dosis</th>
+            <th>Fecha segunda dosis</th>
+            <th>Estado segunda dosis</th>
+            <th>Estado de vacunación</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of listaEmpleados">
+            <td class="align-middle">{{ item.nombre }}</td>
+            <td class="align-middle">{{ item.puesto }}</td>
+            <td class="align-middle">
+                <ng-container *ngIf="item.ref_vacuna?.nombre;else vacunaElseBlock">
+                    {{ item.ref_vacuna?.nombre }}
+                </ng-container>
+                <ng-template #vacunaElseBlock>
+                    <span class="badge bg-secondary">Sin información</span>
+                </ng-template>
+            </td>
+            <td class="align-middle">
+                <ng-container *ngIf="item.fecha_primera_dosis;else pFechaElseBlock">
+                    {{ item.fecha_primera_dosis }}
+                </ng-container>
+                <ng-template #pFechaElseBlock>
+                    <span class="badge bg-secondary">Sin información</span>
+                </ng-template>
+            </td>
+            <td class="align-middle text-center">
+                <ng-container *ngIf="item.estado_primera_dosis;else pDosisElseBlock">
+                    <span class="btn-label text-success"><i class="fa-solid fa-circle-check"></i></span>
+                </ng-container>
+                <ng-template #pDosisElseBlock>
+                    <span class="btn-label text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                </ng-template>
+            </td>
+            <td class="align-middle">
+                <ng-container *ngIf="item.fecha_segunda_dosis; else sFechaElseBlock">
+                    {{ item.fecha_segunda_dosis }}
+                </ng-container>
+                <ng-template #sFechaElseBlock>
+                    <span class="badge bg-secondary">Sin información</span>
+                </ng-template>
+            </td>
+            <td class="align-middle text-center">
+                <ng-container *ngIf="item.estado_segunda_dosis;else sDosisElseBlock">
+                    <span class="btn-label text-success"><i class="fa-solid fa-circle-check"></i></span>
+                </ng-container>
+                <ng-template #sDosisElseBlock>
+                    <span class="btn-label text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                </ng-template>
+            </td>
+            <td class="align-middle">
+                <ng-container *ngIf="item.estado_primera_dosis && item.estado_segunda_dosis;else second">
+                    <span class="badge bg-success">Protegido</span>
+                </ng-container>
+                <ng-template #second>
+                    <ng-container *ngIf="item.estado_primera_dosis&& !item.estado_segunda_dosis;else third">
+                        <span class="badge bg-warning text-dark">En progreso</span>
+                    </ng-container>
+                </ng-template>
+                <ng-template #third>
+                    <span class="badge bg-danger">En riesgo</span>
+                </ng-template>
+            </td>
+            <td class="align-middle">
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-primary btn-sm" [routerLink]="['/empleado/' + item.id_empleado]"><span class="btn-label"><i class="fa-solid fa-pen-to-square"></i></span>Editar</button>
+                    <button (click)="deleteEmpleado(item.id_empleado)" type="button" class="btn btn-outline-danger btn-sm"><span class="btn-label"><i class="fa-solid fa-xmark"></i></span>Eliminar</button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
