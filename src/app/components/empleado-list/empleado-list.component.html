@@ -57,16 +57,21 @@
                 </ng-template>
             </td>
             <td class="align-middle">
-                <ng-container *ngIf="item.estado_primera_dosis && item.estado_segunda_dosis;else second">
+                <ng-container *ngIf="item.ref_vacuna?.dosis == 1 && item.estado_primera_dosis;else elseBlock">
                     <span class="badge bg-success">Protegido</span>
                 </ng-container>
-                <ng-template #second>
-                    <ng-container *ngIf="item.estado_primera_dosis&& !item.estado_segunda_dosis;else third">
-                        <span class="badge bg-warning text-dark">En progreso</span>
+                <ng-template #elseBlock>
+                    <ng-container *ngIf="item.estado_primera_dosis && item.estado_segunda_dosis;else second">
+                        <span class="badge bg-success">Protegido</span>
                     </ng-container>
-                </ng-template>
-                <ng-template #third>
-                    <span class="badge bg-danger">En riesgo</span>
+                    <ng-template #second>
+                        <ng-container *ngIf="item.estado_primera_dosis&& !item.estado_segunda_dosis;else third">
+                            <span class="badge bg-warning text-dark">En progreso</span>
+                        </ng-container>
+                    </ng-template>
+                    <ng-template #third>
+                        <span class="badge bg-danger">En riesgo</span>
+                    </ng-template>
                 </ng-template>
             </td>
             <td class="align-middle">
